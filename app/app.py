@@ -15,16 +15,20 @@ cosine_sim = joblib.load(config['models']['cosine_sim'])
 
 # async def recommend(sp_id: str, n: int = config['recommender']['top_n']):
 
-@app.get("/random_songs")
-async def get_random_songs(n: int = 20):
-    """Lấy ngẫu nhiên n bài hát từ dataset."""
-    try:
-        random_songs = df.sample(n=n)[['spotify_id', 'name', 'artist', 'preview', 'img']]
-        # Xử lý NaN/inf trong các cột
-        random_songs = random_songs.fillna({'preview': '', 'img': ''})  # Thay NaN bằng chuỗi rỗng
-        return random_songs.to_dict(orient='records')
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Số lượng bài hát yêu cầu vượt quá kích thước dataset")
+@app.get("/recommend")
+async def recommend(sp_id: str = Query(default="0b4KsOdnrZlfE5VUAAzxv1"), n: int = Query(default=10)):
+    """Recommend n bài hát tương tự sp_id."""
+    recommendations = recommend_by_id(sp_id, df, cosine_sim, n)
+    if recommendations is None:
+        raise HTTPException(status_code=404, detail="Bài hát không tồn tại")
+    
+    recommendations = recommendations.replace([np.inf, -np.inf], 0).fillna(0)
+    for col in recommendations.columns:
+        recommendations[col] = recommendations[col].apply(
+            lambda x: 0 if isinstance(x, float) and (math.isnan(x) or math.isinf(x)) else x
+        )
+    
+    return recommendations.to_dict(orient='records')
 
 @app.get("/recommend")
 async def recommend(sp_id: str, n: int = Query()):
