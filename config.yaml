@@ -1,0 +1,32 @@
+data:
+  raw: data/raw/Music.csv
+  processed: data/processed/Music_processed.csv
+models:
+  scaler: models/scaler.pkl
+  label_encoder: models/label_encoder.pkl
+  cosine_sim: models/cosine_sim.pkl
+
+features:
+  numeric_cols:
+    - danceability
+    - energy
+    - loudness
+    - speechiness
+    - acousticness
+    - instrumentalness
+    - liveness
+    - valence
+    - acousticness_artist
+    - danceability_artist
+    - energy_artist
+    - instrumentalness_artist
+    - liveness_artist
+    - speechiness_artist
+    - valence_artist
+  additional_cols:
+    - avg_danceability
+    - avg_energy
+    - artist_encoded
+
+recommender:
+  top_n: 

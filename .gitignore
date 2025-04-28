@@ -1,0 +1,20 @@
+# 🐍 Virtual environment
+venv/
+
+# 🔐 Environment variables
+.env
+
+# 🐍 Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 📒 Jupyter notebook checkpoints (nếu dùng)
+.ipynb_checkpoints/
+
+# 🛠 IDE settings (optional)
+.vscode/
+
+# 🖥️ System files
+.DS_Store
+Thumbs.db
