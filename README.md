@@ -71,4 +71,4 @@ Sau đó vào trình duyệt:
 - Dataset chỉ giới hạn tối đa 1500 bài đã được xử lý trong code preprocessing.
 
 ## Tác giả
-- Project by [Your Name] ✨
+- Project by Phan Minh Gia Huy
