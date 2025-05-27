@@ -32,6 +32,7 @@ NOTSPOTIFY_BACKEND/
 python -m venv venv
 source venv/bin/activate    # macOS/Linux
 venv\Scripts\activate.bat   # Windows
+source venv/bin/activate #Ubuntu
 
 pip install -r requirements.txt
 ```
