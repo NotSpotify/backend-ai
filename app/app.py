@@ -1,6 +1,7 @@
 from fastapi import Query
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query, Body
 import pandas as pd
+from typing import List
 import joblib
 import numpy as np
 from src.data_loader import load_csv, load_config
@@ -60,6 +61,35 @@ async def get_songs_by_genre(
     sampled = sampled[['spotify_id', 'name', 'artist', 'preview', 'img', 'music_genre_label']]
     
     return sampled.fillna('').to_dict(orient='records')
+
+@app.post("/generate_playlists_by_genres")
+async def generate_playlists_by_genres(
+    genres: List[str] = Body(..., embed=True),
+    songs_per_genre: int = 20
+):
+    """Tạo playlist từ danh sách các genre."""
+    playlists = []
+
+    for genre in genres:
+        filtered = df[df['music_genre_label'].str.lower() == genre.lower()]
+        if filtered.empty:
+            continue 
+
+        sampled = filtered.sample(n=min(songs_per_genre, len(filtered)))
+        songs = sampled[['spotify_id', 'name', 'artist', 'preview', 'img', 'music_genre_label']]
+        songs = songs.fillna('').to_dict(orient='records')
+
+        playlists.append({
+            'id': f'generated_{genre.lower().replace(" ", "_")}',
+            'name': f'{genre.title()} Mix',
+            'genre': genre,
+            'songs': songs
+        })
+
+    if not playlists:
+        raise HTTPException(status_code=404, detail="Không tạo được playlist nào.")
+
+    return playlists
 
 if __name__ == "__main__":
     import uvicorn
