@@ -38,7 +38,7 @@ NOTSPOTIFY_BACKEND/
 ```
 
 ## 🛠️ Cài đặt
-
+Link dataset: https://www.kaggle.com/datasets/jashanjeetsinghhh/songs-dataset
 ```bash
 python -m venv venv
 source venv/bin/activate        # Linux/macOS
@@ -75,6 +75,7 @@ python -m src.evaluate
 ```
 
 Kết quả:
+- Recommend dựa trên một cái id_song ngẫu nhiên
 - Precision@5 cho mô hình hiện tại.
 
 ### Bước 4: So sánh nhiều mô hình (Cosine, Euclidean, Cluster, Random)
