@@ -5,7 +5,7 @@ from typing import List
 import joblib
 import numpy as np
 from src.data_loader import load_csv, load_config
-from src.recommender import recommend_by_id
+from src.compare_models.recommender import recommend_by_id
 import math
 
 app = FastAPI(title="Music Recommender API")

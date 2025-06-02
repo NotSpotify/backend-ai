@@ -29,4 +29,4 @@ features:
     - artist_encoded
 
 recommender:
-  top_n: 
+  top_n: 5

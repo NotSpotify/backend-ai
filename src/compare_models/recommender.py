@@ -6,7 +6,7 @@ def recommend_songs(df, cosine_sim, song_idx, n=5):
     """Gợi ý top N bài hát tương tự + thêm label thể loại."""
     sim_scores = list(enumerate(cosine_sim[song_idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    top_n = sim_scores[1:n+1]  # bỏ chính nó ở index 0
+    top_n = sim_scores[1:n+1] 
 
     recommendations = df.iloc[[i[0] for i in top_n]][[
         'name', 'artist', 'spotify_id', 'preview', 'img', 'music_genre_label'
